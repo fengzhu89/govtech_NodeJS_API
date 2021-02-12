@@ -1,7 +1,7 @@
 const db = require("../db");
 module.exports = {
   getMessageStatus: (req, res) => {
-       res.send("Welcome to Aministrative Tool");
+    res.send("Welcome to Aministrative Tool");
     // db.query("SELECT * FROM Register", function (err, rows) {
     //   if (err) {
     //     return res.send({

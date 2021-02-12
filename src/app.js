@@ -13,13 +13,13 @@ const {
 } = require("./handlers/postRetrieveForNotifications.handler");
 
 app.use((req, res, next) => {
-  jsonParser(req, res, err => {
-      if (err) {
-          return res.status(400).send({
-            message: err
-          }); // Bad request
-      }
-      next();
+  jsonParser(req, res, (err) => {
+    if (err) {
+      return res.status(400).send({
+        message: err,
+      }); // Bad request
+    }
+    next();
   });
 });
 

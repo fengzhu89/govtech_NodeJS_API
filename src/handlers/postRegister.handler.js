@@ -2,17 +2,17 @@ const { json } = require("body-parser");
 const db = require("../db");
 
 module.exports = {
-  postRegister: async(req, res) => {
-    // check the request body key 
+  postRegister: async (req, res) => {
+    // check the request body key
 
     let teacher = req.body.teacher,
-        students = req.body.students
-    if(typeof teacher ==="undefined" || typeof students === "undefined"){
+      students = req.body.students;
+    if (typeof teacher === "undefined" || typeof students === "undefined") {
       return res.status(400).send({
         message: "Teacher or students is undefined",
       });
     }
-    //check teacher value 
+    //check teacher value
     if (typeof teacher !== "string" || teacher.length < 1) {
       return res.status(400).send({
         message: "teacher email must be a non empty string",
@@ -20,7 +20,7 @@ module.exports = {
     }
 
     //check students format
-    if(typeof students !== 'object'){
+    if (typeof students !== "object") {
       return res.status(400).send({
         message: "students must be an array object",
       });
@@ -36,24 +36,27 @@ module.exports = {
 
       values = [teacher, students[i]];
 
-        try{
-            await new Promise(function (resolve, reject) {
-                db.query("INSERT INTO Register (teacher,students) VALUES(?,?)",values, function (err, result) {
-                  if (err) {
-                    return reject(err);
-                  }
-                  resolve(result);
-                 
-                });
-              })
-        }catch(err){
-            return res.status(400).send({
-                message:err,
-              });
-        }
+      try {
+        await new Promise(function (resolve, reject) {
+          db.query(
+            "INSERT INTO Register (teacher,students) VALUES(?,?)",
+            values,
+            function (err, result) {
+              if (err) {
+                return reject(err);
+              }
+              resolve(result);
+            }
+          );
+        });
+      } catch (err) {
+        return res.status(400).send({
+          message: err,
+        });
+      }
     }
 
-    res.sendStatus(204)
-    res.end()
+    res.sendStatus(204);
+    res.end();
   },
 };
